@@ -16,8 +16,14 @@ class HealthzHome(home.Home):
         headers = [('Content-Type', 'application/json'),
                    ('Cache-Control', 'no-store')]
         healthcheck_ip_whitelist = [ip.strip() for ip in config.get('healthcheck_ip_whitelist', '').split(',')]
-        if request.httprequest.remote_addr not in healthcheck_ip_whitelist:
-            return request.make_response('', headers, status=403)
+
+        # Since Odoo will be always behind a reverse proxy, X-Forwarded-For being exist indicates that the request comes from
+        # public network, treat incoming connections without X-Forwarded-For header as safe. Make sure you configured your ingress
+        # properly.
+        if 'X-Forwarded-For' in request.httprequest.headers:
+            if request.httprequest.remote_addr not in healthcheck_ip_whitelist:
+                return request.make_response('', headers, status=403)
+
         healthcheck_db_name = config.get('healthcheck_db_name', 'postgres')
         healthcheck_db_connect_timeout = config.get('healthcheck_db_connect_timeout', 3)
         
