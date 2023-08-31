@@ -25,8 +25,9 @@ class HealthzHome(main.Home):
                    ('Cache-Control', 'no-store')]
         healthcheck_ip_whitelist = [ip.strip() for ip in config.get('healthcheck_ip_whitelist', '').split(',')]
 
-        # Since Odoo will be always behind a reverse proxy, check the IP from there instead and treat incoming
-        # connections without X-Forwarded-For header as safe.
+        # Old odoo versions don't use X-Forwarded-For headers for client IPs, since Odoo will be always behind
+        # a reverse proxy, check the IP from there instead and treat incoming connections without X-Forwarded-For
+        # header as safe. Make sure you configured your ingress properly
         if 'X-Forwarded-For' in request.httprequest.headers:
             remote_addr = request.httprequest.headers.get('X-Forwarded-For').split(',')[0].strip()
             if remote_addr not in healthcheck_ip_whitelist:
