@@ -24,7 +24,15 @@ class HealthzHome(main.Home):
         headers = [('Content-Type', 'application/json'),
                    ('Cache-Control', 'no-store')]
         healthcheck_ip_whitelist = [ip.strip() for ip in config.get('healthcheck_ip_whitelist', '').split(',')]
-        if request.httprequest.remote_addr not in healthcheck_ip_whitelist:
+
+        # On old odoo versions X-Forwarded-For is not used to get the real client IP address,
+        # so here we're going to check it ourself.
+        if 'X-Forwarded-For' not in request.httprequest.headers:
+            remote_addr = request.httprequest.remote_addr
+        else:
+            remote_addr = [ip.strip() for ip in request.httprequest.headers.get('X-Forwarded-For').split(',')][0]
+        
+        if remote_addr not in healthcheck_ip_whitelist:
             return make_response_with_status('', headers, status=403)
         healthcheck_db_name = config.get('healthcheck_db_name', 'postgres')
         healthcheck_db_connect_timeout = config.get('healthcheck_db_connect_timeout', 3)
