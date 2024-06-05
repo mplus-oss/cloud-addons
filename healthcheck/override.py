@@ -21,7 +21,8 @@ class HealthzHome(home.Home):
         # public network, treat incoming connections without X-Forwarded-For header as safe. Make sure you configured your ingress
         # properly.
         if 'X-Forwarded-For' in request.httprequest.headers:
-            if request.httprequest.remote_addr not in healthcheck_ip_whitelist:
+            client_ip = request.httprequest.headers.get('X-Forwarded-For').split(', ')[0]
+            if client_ip not in healthcheck_ip_whitelist:
                 return request.make_response('', headers, status=403)
 
         healthcheck_db_name = config.get('healthcheck_db_name', 'postgres')
