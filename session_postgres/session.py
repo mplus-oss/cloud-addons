@@ -122,6 +122,8 @@ class PostgresSessionStore(SessionStore):
             session.session_token = security.compute_session_token(session, env)
         self.save(session)
 
-    def vacuum(self):
-        # TODO: implement vacuum
-        return None
+    def vacuum(self, max_lifetime=0):
+        _logger.debug("Vacuuming sessions")
+        with self.c.cursor() as cur:
+            cur.execute("DELETE FROM sessions WHERE expired_at < %s", (datetime.datetime.now(),))
+            self.c.commit()
