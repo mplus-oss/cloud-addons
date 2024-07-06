@@ -18,7 +18,7 @@ This addon must be added in the server wide addons with (`--load` option):
 ## Limitations
 
 * The server has to be restarted in order for the sessions to be stored in
-  Redis.
+  PostgreSQL.
 * All the users will have to login again as their previous session will be
   dropped.
 * The addon monkey-patch `odoo.http.Root.session_store` with a custom
