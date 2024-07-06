@@ -4,7 +4,7 @@ This addon allows to store the web sessions in a PostgreSQL Database.
 
 ## Configuration
 
-The storage of sessions in Redis is activated using environment variables.
+The storage of sessions in PostgreSQL is activated using environment variables.
 
 * `ODOO_SESSION_POSTGRES` has to be `1` or `true`
 * `ODOO_SESSION_POSTGRES_URL` is the connection string (e.g. `postgres://odoo_sessions:p4ssw0rd:postgresql.postgresql.svc:5432/odoo_sessions`)
@@ -22,7 +22,7 @@ This addon must be added in the server wide addons with (`--load` option):
 * All the users will have to login again as their previous session will be
   dropped.
 * The addon monkey-patch `odoo.http.Root.session_store` with a custom
-  method when the Redis mode is active, so incompatibilities with other addons
+  method when the PostgreSQL mode is active, so incompatibilities with other addons
   is possible if they do the same.
 
 # Original Authors
