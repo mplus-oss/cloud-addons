@@ -47,7 +47,7 @@ def purge_fs_sessions(path):
 
 if is_true(os.environ.get("ODOO_SESSION_POSTGRES")):
     _logger.info(
-        "HTTP sessions stored in PostgreSQL at %s" % os.environ.get("ODOO_SESSION_POSTGRES_URL")
+        "HTTP sessions stored in PostgreSQL"
     )
     http.Application.session_store = session_store
     # clean the existing sessions on the file system
