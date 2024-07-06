@@ -30,7 +30,6 @@ def session_store(self):
 
     return PostgresSessionStore(
         c=c,
-        prefix=prefix,
         expiration=expiration,
         anon_expiration=anon_expiration,
         session_class=http.Session,
@@ -48,12 +47,7 @@ def purge_fs_sessions(path):
 
 if is_true(os.environ.get("ODOO_SESSION_POSTGRES")):
     _logger.info(
-        "HTTP sessions stored in PostgreSQL with prefix '%s'. "
-        "Using Database %s on %s:%s",
-        prefix or "",
-        dbname,
-        host,
-        port,
+        "HTTP sessions stored in PostgreSQL at %s" % os.environ.get("ODOO_SESSION_POSTGRES_URL")
     )
     http.Application.session_store = session_store
     # clean the existing sessions on the file system

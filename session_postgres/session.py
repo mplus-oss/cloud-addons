@@ -24,7 +24,6 @@ class PostgresSessionStore(SessionStore):
         self,
         c,
         session_class=None,
-        prefix="",
         expiration=None,
         anon_expiration=None,
     ):
