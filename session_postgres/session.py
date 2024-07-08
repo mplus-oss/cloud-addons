@@ -40,6 +40,26 @@ class PostgresSessionStore(SessionStore):
         else:
             self.anon_expiration = anon_expiration
 
+        self._init_db()
+        
+
+    def _init_db(self):
+        with self.c.cursor() as cur:
+            cur.execute(
+                """
+                CREATE TABLE IF NOT EXISTS sessions (
+                    key CHAR(40) PRIMARY KEY,
+                    context JSONB NOT NULL,
+                    db VARCHAR(64) NOT NULL,
+                    debug VARCHAR(20) NOT NULL,
+                    uid INT,
+                    session_token CHAR(64),
+                    expired_at TIMESTAMP NOT NULL
+                );
+                """
+            )
+            self.c.commit()
+
     def save(self, session):
         expired_at = datetime.datetime.now()
         if session.uid:

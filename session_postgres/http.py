@@ -22,6 +22,7 @@ def is_true(strval):
 url = os.environ.get("ODOO_SESSION_POSTGRES_URL")
 expiration = os.environ.get("ODOO_SESSION_POSTGRES_EXPIRATION")
 anon_expiration = os.environ.get("ODOO_SESSION_POSTGRES_EXPIRATION_ANONYMOUS")
+maxconn = os.environ.get("ODOO_SESSION_POSTGRES_MAXCONN")
 
 
 @lazy_property
