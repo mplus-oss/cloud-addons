@@ -7,7 +7,7 @@ This addon allows to store the web sessions in a PostgreSQL Database.
 The storage of sessions in PostgreSQL is activated using environment variables.
 
 * `ODOO_SESSION_POSTGRES` has to be `1` or `true`
-* `ODOO_SESSION_POSTGRES_URL` is the connection string (e.g. `postgres://odoo_sessions:p4ssw0rd:postgresql.postgresql.svc:5432/odoo_sessions`)
+* `ODOO_SESSION_POSTGRES_URL` is the connection string (e.g. `postgres://odoo_sessions:p4ssw0rd@postgresql.postgresql.svc:5432/odoo_sessions`)
 * `ODOO_SESSION_POSTGRES_EXPIRATION` is the time in seconds before expiration of the sessions (default is 7 days)
 * `ODOO_SESSION_POSTGRES_EXPIRATION_ANONYMOUS` is the time in seconds before expiration of the anonymous sessions (default is 3 hours)
 
