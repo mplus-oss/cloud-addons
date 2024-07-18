@@ -13,5 +13,5 @@
     "website": "https://github.com/camptocamp/odoo-cloud-platform",
     "data": ["data/res_config_settings_data.xml"],
     "installable": True,
-    "auto_install": True,
+    "auto_install": False,
 }
