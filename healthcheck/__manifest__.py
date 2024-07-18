@@ -7,6 +7,6 @@
     'license': 'LGPL-3',
     'category': 'Tools',
     'depends': ['web'],
-    'auto_install': True,
-    'installable': True,
+    'auto_install': False,
+    'installable': False,
 }
