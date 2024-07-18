@@ -7,6 +7,6 @@
     'category': 'Extra Tools',
     'depends': ['base'],
     'website': 'https://github.com/mplus-oss/cloud-addons',
-    'data': [],
-    'installable': True,
+    'auto_install': False,
+    'installable': False,
 }
