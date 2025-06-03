@@ -31,7 +31,7 @@ class HealthzHome(main.Home):
         if 'X-Forwarded-For' in request.httprequest.headers:
             client_ip = request.httprequest.headers.get('X-Forwarded-For').split(', ')[0]
             if client_ip not in healthcheck_ip_whitelist:
-                return request.make_response('', headers, status=403)
+                return make_response_with_status('', headers, status=403)
 
         healthcheck_db_name = config.get('healthcheck_db_name', 'postgres')
         healthcheck_db_connect_timeout = config.get('healthcheck_db_connect_timeout', 3)
