@@ -4,13 +4,12 @@ import logging
 from odoo import http
 from odoo.tools import config
 from odoo.http import request
-from odoo.addons.web.controllers import home
 
 
 _logger = logging.getLogger(__name__)
 
 
-class HealthzHome(home.Home):
+class HealthzHome(http.Controller):
     @http.route('/healthz', type='http', auth="none", save_session=False, methods=['GET'])
     def mplus_web_health(self):
         headers = [('Content-Type', 'application/json'),
@@ -51,7 +50,3 @@ class HealthzHome(home.Home):
             'status': 'pass',
         })
         return request.make_response(data, headers)
-
-
-_logger.info("Monkeypatching odoo.addons.web.controllers.home.Home with healthcheck.HealthzHome")
-home.Home = HealthzHome
