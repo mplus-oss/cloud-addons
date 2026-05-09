@@ -9,7 +9,7 @@ from odoo.http import request
 _logger = logging.getLogger(__name__)
 
 
-class HealthzHome(http.Controller):
+class HealthzController(http.Controller):
     @http.route('/healthz', type='http', auth="none", save_session=False, methods=['GET'])
     def mplus_web_health(self):
         headers = [('Content-Type', 'application/json'),
