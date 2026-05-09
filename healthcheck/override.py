@@ -32,12 +32,13 @@ class HealthzHome(http.Controller):
             db_password = config.get('db_password')
             db_host = config.get('db_host')
             db_port = config.get('db_port')
+            connect_timeout = int(healthcheck_db_connect_timeout)
             with psycopg2.connect(dbname=healthcheck_db_name,
                                   user=db_user,
                                   password=db_password,
                                   host=db_host,
                                   port=db_port,
-                                  connect_timeout=healthcheck_db_connect_timeout) as conn:
+                                  connect_timeout=connect_timeout) as conn:
                 with conn.cursor() as cur:
                     cur.execute("SELECT 1")
         except psycopg2.OperationalError as e:
