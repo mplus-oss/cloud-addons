@@ -51,3 +51,6 @@ class HealthzController(http.Controller):
             'status': 'pass',
         })
         return request.make_response(data, headers)
+
+
+_logger.info("Server-wide controller ‘healthcheck’ has been successfully loaded. The /healthz endpoint is now active.")
