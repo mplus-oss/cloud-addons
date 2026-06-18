@@ -17,7 +17,7 @@ class HealthzController(http.Controller):
                    ('Cache-Control', 'no-store')]
         healthcheck_ip_whitelist = [ip.strip() for ip in str(ip_whitelist_str).split(',')]
 
-        if '0.0.0.0' not in healthcheck_ip_whitelist and '127.0.0.1' not in healthcheck_ip_whitelist:
+        if not {'0.0.0.0', '127.0.0.1'} <= set(healthcheck_ip_whitelist):
             # Since Odoo will be always behind a reverse proxy, X-Forwarded-For being exist indicates that the request comes from
             # public network, treat incoming connections without X-Forwarded-For header as safe. Make sure you configured your ingress
             # properly.
@@ -56,3 +56,7 @@ class HealthzController(http.Controller):
 
 
 _logger.info("Server-wide controller ‘healthcheck’ has been successfully loaded. The /healthz endpoint is now active.")
+if not config.get('healthcheck_ip_whitelist'):
+    _logger.warning(
+        "healthcheck_ip_whitelist is not configured. The /healthz endpoint is open to all IPs."
+    )
